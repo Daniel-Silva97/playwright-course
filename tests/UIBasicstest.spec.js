@@ -26,5 +26,11 @@ test('Page Playwright Test', async ({ page })=>
 {
     // PlayWright code here
 
-    await page.goto("https://sso.teachable.com/secure/9521/identity/login/password");
+    await page.goto("https://google.com");
 });
+
+// Execute in headless mode (Without open Browser) - npx playwright test
+// Execute with browser openning - npx playwright test --headed
+
+
+// test.only('Force execute this test only', async ({ page })=> { });
