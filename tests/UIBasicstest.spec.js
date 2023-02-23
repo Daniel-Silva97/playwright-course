@@ -1,5 +1,5 @@
 // Import annotation with all playwright jobs
-const {test} = require('@playwright/test');
+const {test, expect} = require('@playwright/test');
 
 // ASYNC is required to tell javascript not to execute code asynchronously, without them, AWAIT not work
 // Anonymous function created async ()=> {}
@@ -27,6 +27,11 @@ test('Page Playwright Test', async ({ page })=>
     // PlayWright code here
 
     await page.goto("https://google.com");
+
+    // Check title - get / assertion
+    await console.log(page.title());
+    await expect(page).toHaveTitle("Google");
+
 });
 
 // Execute in headless mode (Without open Browser) - npx playwright test
