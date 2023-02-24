@@ -17,12 +17,23 @@ test('Browser Context Create Playwright Test', async ({ browser })=>
 
     // Navigate to one page
     await page.goto("https://sso.teachable.com/secure/9521/identity/login/password");
+
+    // Typing user
+    await page.locator('#username').type("rahulshetty");
+    // Typing password
+    await page.locator("[type='password']").type("learning");
+    // Click login btn
+    await page.locator("#signInBtn").click();
+    // Extract message error if login is incorrect
+    console.log(await page.locator("[style*='block']").textContent());
+    // Expect that locator has the string 'Incorrect'
+    await expect(page.locator("[style*='block']")).toContainText('Incorrect');
 });
 
 
 
 // page it's global and will use default browser instances
-test('Page Playwright Test', async ({ page })=> 
+test.only('Page Playwright Test', async ({ page })=> 
 {
     // PlayWright code here
 
@@ -32,6 +43,11 @@ test('Page Playwright Test', async ({ page })=>
     await console.log(page.title());
     await expect(page).toHaveTitle("Google");
 
+
+    // css, XPATH
+    await page.locator(".gLFyf").type("Testando Locators");
+    
+    await page.locator("xpath=//html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]").click();
 });
 
 // Execute in headless mode (Without open Browser) - npx playwright test
@@ -39,3 +55,21 @@ test('Page Playwright Test', async ({ page })=>
 
 
 // test.only('Force execute this test only', async ({ page })=> { });
+
+// Locators options
+/*
+If ID is present
+CSS -> tagname#id (or) #id
+
+If class attribute is present
+CSS -> tagname.class (or) .class
+
+Write css based on any Attribute
+CSS -> [attribute='value']
+
+Write CSS with traversing from Parent to child
+CSS -> parenttagname >> childtagname
+
+if needs to write the locator based on text
+text=''
+*/
