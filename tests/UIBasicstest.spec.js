@@ -14,20 +14,49 @@ test('Browser Context Create Playwright Test', async ({ browser })=>
     // Create a new page
     const page = await context.newPage();
 
+    // Create variable to store locators and create aliases
+    const userName = page.locator('#username');
+    const signIn = page.locator("#signInBtn");
+    const cardTitles = page.locator(".card-body a");
+
 
     // Navigate to one page
     await page.goto("https://sso.teachable.com/secure/9521/identity/login/password");
 
     // Typing user
-    await page.locator('#username').type("rahulshetty");
+    await userName.type("rahulshetty");
     // Typing password
     await page.locator("[type='password']").type("learning");
     // Click login btn
-    await page.locator("#signInBtn").click();
+    await signIn.click();
     // Extract message error if login is incorrect
     console.log(await page.locator("[style*='block']").textContent());
     // Expect that locator has the string 'Incorrect'
     await expect(page.locator("[style*='block']")).toContainText('Incorrect');
+
+    // type - fill
+
+    // Fill with empty string will clear the present data and set ""
+    await userName.fill("");
+
+    // Enter new data with fill
+    await userName.fill("rahul")
+
+    await signIn.click();
+
+
+    // Access and return only the first result
+    // nth(Array Index)
+    await cardTitles.nth(0).textContent();
+    // OR
+    // Always return the first element
+    await cardTitles.first().textContent();
+
+    // grab all titles present in cardTitles
+    const allTitles = await cardTitles.allTextContents();
+    console.log(allTitles);
+   
+
 });
 
 
