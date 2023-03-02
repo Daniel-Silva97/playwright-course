@@ -4,7 +4,7 @@ const {test, expect} = require('@playwright/test');
 // ASYNC is required to tell javascript not to execute code asynchronously, without them, AWAIT not work
 // Anonymous function created async ()=> {}
 // browser comes from annotation test, no need to declare it, it's global fixtures
-test('Browser Context Create Playwright Test', async ({ browser })=> 
+test.skip('Browser Context Create Playwright Test', async ({ browser })=> 
 {
     // PlayWright code here
 
@@ -42,7 +42,14 @@ test('Browser Context Create Playwright Test', async ({ browser })=>
     // Enter new data with fill
     await userName.fill("rahul")
 
-    await signIn.click();
+    await Promise.all(
+        [
+            // That will wait that a navigation page after some action
+            page.waitForNavigation(),
+            // Click will init de navigation
+            signIn.click(),
+        ]
+    )
 
 
     // Access and return only the first result
@@ -62,7 +69,7 @@ test('Browser Context Create Playwright Test', async ({ browser })=>
 
 
 // page it's global and will use default browser instances
-test.only('Page Playwright Test', async ({ page })=> 
+test('Page Playwright Test', async ({ page })=> 
 {
     // PlayWright code here
 
