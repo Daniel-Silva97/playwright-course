@@ -76,7 +76,7 @@ test('Page Playwright Test', async ({ page })=>
     await page.goto("https://google.com");
 
     // Check title - get / assertion
-    await console.log(page.title());
+    console.log(page.title());
     await expect(page).toHaveTitle("Google");
 
 
@@ -94,6 +94,7 @@ test.only('UI Controls', async ({ page })=>
     const password = page.locator("#userPassword");
     const dropdown = page.locator(".custom-select");
     const radioBtn = page.locator(".mt-3.ng-valid");
+    const checkBox = page.locator("input[type='checkbox']");
 
     await registerBtn.click()
 
@@ -101,14 +102,14 @@ test.only('UI Controls', async ({ page })=>
     await dropdown.selectOption("3: Engineer");
 
     // Open playwright inspector and pause the tests, so you can see the results
-    await page.pause();
+    // await page.pause();
 
 
     //Radio Buttons
 
     //Select First option
     await page.locator(".mt-3.ng-valid").first().click();
-    await page.pause();
+    // await page.pause();
 
     // Select last option
     await radioBtn.last().click();
@@ -118,6 +119,20 @@ test.only('UI Controls', async ({ page })=>
     await radioBtn.nth(0).click();
 
     // After click radio button option, create an assertion to make sure that's already selected
+    // Assertion
+    expect(radioBtn.nth(0)).toBeChecked();
+    //Console validation
+    console.log("Male? " + await radioBtn.nth(0).isChecked());
+
+    //Checkbox
+    await checkBox.click()
+    await expect(checkBox).toBeChecked();
+
+    // Uncheck
+    await checkBox.uncheck();
+    console.log("Checked? " + await checkBox.isChecked());
+    // Assertion
+    expect(await checkBox.isChecked()).toBeFalsy();
     
 
 });
