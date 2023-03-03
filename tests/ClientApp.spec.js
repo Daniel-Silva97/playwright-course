@@ -3,7 +3,7 @@ const {test, expect} = require('@playwright/test');
 
 
 // page it's global and will use default browser instances
-test.only('Browser Context-Validating Error Login', async ({ page })=> {
+test('Browser Context-Validating Error Login', async ({ page })=> {
 
     const userName = page.locator("#userEmail");
     const password = page.locator("#userPassword");
@@ -12,8 +12,8 @@ test.only('Browser Context-Validating Error Login', async ({ page })=> {
 
     await page.goto("https://rahulshettyacademy.com/client");
     
-    await userName.fill("anshika@gmail.com");
-    await password.fill("Iamking@000")
+    await userName.fill("teste@playwright.com");
+    await password.fill("Playwright@123");
 
     await page.locator("[value='Login']").click();
 

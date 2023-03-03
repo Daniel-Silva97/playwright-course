@@ -4,7 +4,7 @@ const {test, expect} = require('@playwright/test');
 // ASYNC is required to tell javascript not to execute code asynchronously, without them, AWAIT not work
 // Anonymous function created async ()=> {}
 // browser comes from annotation test, no need to declare it, it's global fixtures
-test.skip('Browser Context Create Playwright Test', async ({ browser })=> 
+test('Browser Context Create Playwright Test', async ({ browser })=> 
 {
     // PlayWright code here
 
@@ -86,6 +86,42 @@ test('Page Playwright Test', async ({ page })=>
     await page.locator("xpath=//html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]").click();
 });
 
+test.only('UI Controls', async ({ page })=> 
+{
+    await page.goto("https://rahulshettyacademy.com/client");
+    const registerBtn = page.locator(".btn1")
+    const userName = page.locator("#userEmail");
+    const password = page.locator("#userPassword");
+    const dropdown = page.locator(".custom-select");
+    const radioBtn = page.locator(".mt-3.ng-valid");
+
+    await registerBtn.click()
+
+    // Will select the option in a dropdown, put the value option from HTML here in this method
+    await dropdown.selectOption("3: Engineer");
+
+    // Open playwright inspector and pause the tests, so you can see the results
+    await page.pause();
+
+
+    //Radio Buttons
+
+    //Select First option
+    await page.locator(".mt-3.ng-valid").first().click();
+    await page.pause();
+
+    // Select last option
+    await radioBtn.last().click();
+    
+
+    // Select a middle option by index
+    await radioBtn.nth(0).click();
+
+    // After click radio button option, create an assertion to make sure that's already selected
+    
+
+});
+
 // Execute in headless mode (Without open Browser) - npx playwright test
 // Execute with browser openning - npx playwright test --headed
 
@@ -109,3 +145,6 @@ CSS -> parenttagname >> childtagname
 if needs to write the locator based on text
 text=''
 */
+
+
+
