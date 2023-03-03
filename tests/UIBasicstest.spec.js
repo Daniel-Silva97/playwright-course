@@ -14,17 +14,18 @@ test('Browser Context Create Playwright Test', async ({ browser })=>
     // Create a new page
     const page = await context.newPage();
 
+    // Navigate to one page
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    
     // Create variable to store locators and create aliases
     const userName = page.locator('#username');
     const signIn = page.locator("#signInBtn");
     const cardTitles = page.locator(".card-body a");
-
-
-    // Navigate to one page
-    await page.goto("https://sso.teachable.com/secure/9521/identity/login/password");
+    const blinkLocator = page.locator("[href*='documents-request']");
+    
 
     // Typing user
-    await userName.type("rahulshetty");
+    await userName.type("rahulshettyacademys");
     // Typing password
     await page.locator("[type='password']").type("learning");
     // Click login btn
@@ -40,7 +41,11 @@ test('Browser Context Create Playwright Test', async ({ browser })=>
     await userName.fill("");
 
     // Enter new data with fill
-    await userName.fill("rahul")
+    await userName.fill("rahulshettyacademy");
+
+
+    // Validate if class has the correct Attribute
+    await expect(blinkLocator).toHaveAttribute("class","blinkingText");
 
     await Promise.all(
         [
@@ -49,7 +54,7 @@ test('Browser Context Create Playwright Test', async ({ browser })=>
             // Click will init de navigation
             signIn.click(),
         ]
-    )
+    );
 
 
     // Access and return only the first result
@@ -64,12 +69,13 @@ test('Browser Context Create Playwright Test', async ({ browser })=>
     console.log(allTitles);
    
 
+
 });
 
 
 
 // page it's global and will use default browser instances
-test('Page Playwright Test', async ({ page })=> 
+test.skip('Page Google', async ({ page })=> 
 {
     // PlayWright code here
 
@@ -86,10 +92,10 @@ test('Page Playwright Test', async ({ page })=>
     await page.locator("xpath=//html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]").click();
 });
 
-test.only('UI Controls', async ({ page })=> 
+test('UI Controls', async ({ page })=> 
 {
     await page.goto("https://rahulshettyacademy.com/client");
-    const registerBtn = page.locator(".btn1")
+    const registerBtn = page.locator(".btn1");
     const userName = page.locator("#userEmail");
     const password = page.locator("#userPassword");
     const dropdown = page.locator(".custom-select");
@@ -125,13 +131,16 @@ test.only('UI Controls', async ({ page })=>
     console.log("Male? " + await radioBtn.nth(0).isChecked());
 
     //Checkbox
-    await checkBox.click()
+    await checkBox.click();
+
+    // Await before expect, because the ActionPerformed "toBeChecked" is out of scope of expected, it's a global scope
     await expect(checkBox).toBeChecked();
 
     // Uncheck
     await checkBox.uncheck();
     console.log("Checked? " + await checkBox.isChecked());
     // Assertion
+    // Here, await is inside expect, because the ActionPerformed "isChecked" is inside the scope of expect 
     expect(await checkBox.isChecked()).toBeFalsy();
     
 
