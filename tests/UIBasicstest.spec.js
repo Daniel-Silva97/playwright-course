@@ -44,7 +44,7 @@ test('Browser Context Create Playwright Test', async ({ browser })=>
     await userName.fill("rahulshettyacademy");
 
 
-    // Validate if class has the correct Attribute
+    // Validate if class has the correct Attribute5
     await expect(blinkLocator).toHaveAttribute("class","blinkingText");
 
     await Promise.all(
@@ -70,6 +70,36 @@ test('Browser Context Create Playwright Test', async ({ browser })=>
    
 
 
+});
+
+
+test('Child windows handling', async ({ browser })=> 
+{
+    // Here, we're gonna need browser instead page to create a context, and after that, get the new page in the test if required
+    const context = await browser.newContext();
+    const page = await context.newPage();
+
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const blinkLocator = page.locator("[href*='documents-request']");
+    const userName = page.locator('#username');
+
+
+    // Getting the new page telling playwright that if i click in the document link, playwright should be wating for a newPage event
+    // NewPage must to be an array in case links open two or more windows
+    const [newPage] = await Promise.all([
+            context.waitForEvent('page'),
+            blinkLocator.click()
+    ]);
+
+    // Testing the newPage openned
+    const text = await newPage.locator(".red").textContent();
+    const arrayText = text.split("@");
+    const domain = arrayText[1].split(" ")[0];
+    console.log(domain);
+
+    await userName.type(domain);
+    await page.pause();
+    console.log(await userName.textContent());
 });
 
 
