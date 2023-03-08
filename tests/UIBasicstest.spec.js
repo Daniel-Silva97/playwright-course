@@ -201,4 +201,37 @@ text=''
 */
 
 
+/*
+---------------------
+COMANDO PARA DEBUG
+---------------------
+npx playwright test --debug
+
+
+
+COMANDO PARA GRAVAR AS AÇÕES E GERAR O CODIGO
+----------------------------------------------
+npx playwright codegen <URL_SITE>
+
+
+
+Usando Trace no playwright
+-------------------------
+
+Ativar no playwright.config.js o parâmetro:
+
+trace : 'on' - Para gerar em qualquer situação
+trace: 'retain-on-failure', - Somente quando houver falha
+
+
+Após isso, em todo o teste será gerado no report HTML um dropdown Trace com os logs dos testes.
+
+Site para abrir arquivo ZIP gerado
+
+https://trace.playwright.dev/
+
+
+
+*/
+
 
