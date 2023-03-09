@@ -23,7 +23,7 @@ test.only('Browser Context-Validating Error Login', async ({ page })=> {
 
     // allTextContents do not wait until the page is loaded
     const allTitles = await page.locator(".card-body b").allTextContents();
-    console.log(allTitles)
+    console.log(allTitles);
 
 
     //Getting total products
@@ -49,5 +49,28 @@ test.only('Browser Context-Validating Error Login', async ({ page })=> {
     const bool = await page.locator("h3:has-text('adidas original')").isVisible();
     //Assertion to see that's ok
     expect(bool).toBeTruthy();
+
+
+    //Click checkout
+    await page.locator("text=Checkout").click();
+
+    // Typing in dropdown country, delay is to slow type in the page to load the suggestions in dropdown
+    await page.locator("[placeholder*='Country']").type("ind", {delay:100});
+
+    const dropdown = page.locator(".ta-results");
+    await dropdown.waitFor();
+
+    const options = await dropdown.locator("button").count();
+
+    for(let i = 0; i < options; i++) {
+        const text = await dropdown.locator("button").nth(i).textContent();
+        if (text.trim() === "India") {
+            // click operation in option
+            await dropdown.locator("button").nth(i).click();
+            break;
+        }
+    }
+
+    await page.pause();
     
 });
