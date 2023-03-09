@@ -3,7 +3,7 @@ const {test, expect} = require('@playwright/test');
 
 
 // page it's global and will use default browser instances
-test.only('Browser Context-Validating Error Login', async ({ page })=> {
+test('Browser Context-Validating Error Login', async ({ page })=> {
 
 
     await page.goto("https://rahulshettyacademy.com/client");
