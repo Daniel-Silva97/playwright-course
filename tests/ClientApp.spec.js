@@ -12,8 +12,9 @@ test.only('Browser Context-Validating Error Login', async ({ page })=> {
     const password = page.locator("#userPassword");
     const products = page.locator(".card-body");
     const productName = 'adidas original';
+    const email = "teste@playwright.com"
    
-    await userName.fill("teste@playwright.com");
+    await userName.fill(email);
     await password.fill("Playwright@123");
 
     await page.locator("[value='Login']").click();
@@ -57,20 +58,35 @@ test.only('Browser Context-Validating Error Login', async ({ page })=> {
     // Typing in dropdown country, delay is to slow type in the page to load the suggestions in dropdown
     await page.locator("[placeholder*='Country']").type("ind", {delay:100});
 
+    // wait for suggestions in dropdown show up
     const dropdown = page.locator(".ta-results");
     await dropdown.waitFor();
 
+    // counting...
     const options = await dropdown.locator("button").count();
 
     for(let i = 0; i < options; i++) {
         const text = await dropdown.locator("button").nth(i).textContent();
         if (text.trim() === "India") {
-            // click operation in option
+            // click operation in right option
             await dropdown.locator("button").nth(i).click();
             break;
         }
     }
 
-    await page.pause();
-    
+    // chech if email typed here equal our login email
+    await expect(page.locator(".user__name label[type='text']")).toHaveText(email);
+
+    // Click in place order
+    await page.locator(".action__submit").click();
+
+    // Check if the page contain this text
+    await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
+
+    // Allocating order ID
+    const orderId = await page.locator(".em-spacer-1 .ng-star-inserted").textContent();
+    console.log(orderId);
+
+
+        
 });
