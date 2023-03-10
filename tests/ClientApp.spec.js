@@ -3,7 +3,7 @@ const {test, expect} = require('@playwright/test');
 
 
 // page it's global and will use default browser instances
-test('Browser Context-Validating Error Login', async ({ page })=> {
+test.only('Browser Context-Validating Error Login', async ({ page })=> {
 
 
     await page.goto("https://rahulshettyacademy.com/client");
@@ -12,7 +12,7 @@ test('Browser Context-Validating Error Login', async ({ page })=> {
     const password = page.locator("#userPassword");
     const products = page.locator(".card-body");
     const productName = 'adidas original';
-    const email = "teste@playwright.com"
+    const email = "teste@playwright.com";
    
     await userName.fill(email);
     await password.fill("Playwright@123");
@@ -83,10 +83,27 @@ test('Browser Context-Validating Error Login', async ({ page })=> {
     // Check if the page contain this text
     await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
 
-    // Allocating order ID
+    // Allocating order ID without space and '|'
     const orderId = await page.locator(".em-spacer-1 .ng-star-inserted").textContent();
-    console.log(orderId);
 
 
-        
+    // Go to My Orders
+    await page.locator("label[routerlink*='myorders']").click();
+    
+    const rows = page.locator("tbody tr");
+
+    await page.locator("tbody").waitFor();
+
+    for( let i = 0; i < await rows.count(); i++) {
+        const rowOrderId = await rows.nth(i).locator("th").textContent();
+        // If the order exists here
+        if (orderId.includes(rowOrderId)) {
+            // Click in View Button
+            await rows.nth(i).locator("button").first().click();
+            break;
+        }
+    } 
+    
+    const orderDetailsId = await page.locator(".col-text").textContent();
+    expect(orderId.includes(orderDetailsId)).toBeTruthy();
 });
