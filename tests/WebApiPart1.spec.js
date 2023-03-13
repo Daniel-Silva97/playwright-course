@@ -2,6 +2,8 @@ const {test, expect, request} = require("@playwright/test")
 
 const loginPayload = {userEmail:"teste@playwright.com",userPassword:"Playwright@123"};
 
+let token;
+
 // Execute one time before all tests cases
 test.beforeAll( async() => {
     // Create a new context to do api request
@@ -20,35 +22,31 @@ test.beforeAll( async() => {
 
 
     // Convert to JSON
-    const loginResponseJSON = loginResponse.json();
+    const loginResponseJSON = await loginResponse.json();
 
     // Extract token from JSON
-    const token = loginResponseJSON.token;
+    token = loginResponseJSON.token;
 
-    
+    console.log(token);
 });
 
 // Execute before each test, with 3 tests, there will be 3 executions.
 // test.beforeEach(() => {});
 
-test('Web API Validation', async ({ page })=> {
+test('Place the order', async ({ page })=> {
+
+    // Add to Aplication -> Local Storage the token extract from API request
+    // JavaScript initial script
+    page.addInitScript( value => {
+        window.localStorage.setItem('token', value);
+    }, token);
 
 
-    await page.goto("https://rahulshettyacademy.com/client");
-
-    const userName = page.locator("#userEmail");
-    const password = page.locator("#userPassword");
     const products = page.locator(".card-body");
     const productName = 'adidas original';
     const email = "teste@playwright.com";
-   
-    await userName.fill(email);
-    await password.fill("Playwright@123");
 
-    await page.locator("[value='Login']").click();
-
-    // Wait until all the requests in Network option are made (API's requests)
-    await page.waitForLoadState('networkidle');
+    await page.goto("https://rahulshettyacademy.com/client");
 
     // allTextContents do not wait until the page is loaded
     const allTitles = await page.locator(".card-body b").allTextContents();
