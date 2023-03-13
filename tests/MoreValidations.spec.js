@@ -31,7 +31,6 @@ test("Popup validations", async({page}) => {
     action -> Accept or Cancel
     */
 
-    await page.pause()
     // OK, he will wait until the dialog appears, even if the action doesn't happen yet.
     page.on('dialog', dialog => dialog.accept());
     // Click after to see playwright waiting
@@ -43,4 +42,15 @@ test("Popup validations", async({page}) => {
 
     // Mouse hover options
     await page.locator("#mousehover").hover();
+
+    // Handling with frames
+    const framePage =  page.frameLocator("#courses-iframe");
+
+    // Locator has 2 elements matching, but only one is visible, we can use :visible 
+    // to tell playwright that we want click in the visible one
+    await framePage.locator("li a[href*='lifetime-access']:visible").click();
+
+    // Check Text inside de Frame
+    const textCheck = await framePage.locator(".text h2").textContent();
+    console.log(textCheck.split(" ")[1]);
 });
