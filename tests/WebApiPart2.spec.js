@@ -146,3 +146,22 @@ test('Test titles 2', async ()=> {
     console.log(allTitles);
 
 });
+
+
+/*
+Dubugging API's in PlaWright
+
+In package.json, update the session "scripts": {};
+
+Inside, you put the command that run the file you wanna debug, for example:
+
+"scripts": {
+    "test": "npx playwright test tests/WebApiPart1.spec.js --headed"
+}
+
+After that put a breakpoint on VSCode in the line you want to debug
+
+Press CTRL + Shift + A
+
+Write Debug npm script and run
+*/
