@@ -54,3 +54,18 @@ test("Popup validations", async({page}) => {
     const textCheck = await framePage.locator(".text h2").textContent();
     console.log(textCheck.split(" ")[1]);
 });
+
+test("Screenshot and Visual Comparison", async({page}) => {
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+
+    await expect(page.locator("#displayed-text")).toBeVisible();
+
+    await page.locator("#displayed-text").screenshot({path: 'locatorScreenshot.png'});
+
+    await page.locator("#hide-textbox").click();
+    // Take screenshot at this moment (All page)
+    await page.screenshot({path: 'pageScreenshot.png'});
+
+    
+    await expect(page.locator("#displayed-text")).toBeHidden();
+});
