@@ -1,5 +1,5 @@
 // Import annotation with all playwright jobs
-const {test, expect} = require('@playwright/test');
+const {test, expect, request} = require('@playwright/test');
 
 // ASYNC is required to tell javascript not to execute code asynchronously, without them, AWAIT not work
 // Anonymous function created async ()=> {}
@@ -13,6 +13,28 @@ test('Browser Context Create Playwright Test', async ({ browser })=>
     const context = await browser.newContext();
     // Create a new page
     const page = await context.newPage();
+
+    // page.route(
+    //     // Get all requests with .css
+    //     '**/*.css',
+    //     // Abort the request, the CSS will not load
+    //     route => route.abort()
+    // )
+
+
+    page.route(
+        // Block all images in the site
+        '**/*.{jpg,png,jpeg,svg}',
+        // Abort the request, the images will not load
+        route => route.abort()
+    );
+
+
+    // See all request URL made by the application
+    page.on('request', request => console.log(request.url()));
+    // See all the response URL/status
+    page.on('response', response => console.log(response.url(), response.status())); 
+
 
     // Navigate to one page
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
