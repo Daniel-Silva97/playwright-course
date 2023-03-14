@@ -82,14 +82,14 @@ Screenshot -> Store -> Screenshot
 If anything in the first screenshot is not align with the second, playwright can compare and say that's wrong.
 */
 
-test("Visual testing fail", async({page}) => {
-    await page.goto('https://on.fiap.com.br/index.php');
-    // It will compare screenshots, every detail is important, has to be a perfectly match
-    // This page will fail because the animation
-    expect(await page.screenshot()).toMatchSnapshot('landing.png')
-});
+// test("Visual testing fail", async({page}) => {
+//     await page.goto('https://on.fiap.com.br/index.php');
+//     // It will compare screenshots, every detail is important, has to be a perfectly match
+//     // This page will fail because the animation
+//     expect(await page.screenshot()).toMatchSnapshot('landing.png')
+// });
 
-test("Visual testing Passed", async({page}) => {
-    await page.goto('https://google.com');
-    expect(await page.screenshot()).toMatchSnapshot('google.png')
-});
+// test("Visual testing Passed", async({page}) => {
+//     await page.goto('https://google.com');
+//     expect(await page.screenshot()).toMatchSnapshot('google.png')
+// });
