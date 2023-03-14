@@ -25,7 +25,7 @@ test.beforeAll( async() => {
 
 
 
-test.only('Fake response API', async ({ page })=> {
+test('Fake response API', async ({ page })=> {
     // Add to Aplication -> Local Storage the token extract from API request
     // JavaScript initial script
     page.addInitScript( value => {
