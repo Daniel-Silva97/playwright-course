@@ -8,7 +8,7 @@ const { MyOrdersPage } = require('../pages/MyOrdersPage');
 
 
 
-test.only('Browser Context-Validating Error Login', async ({ page })=> {
+test('Browser Context-Validating Error Login', async ({ page })=> {
     const productName = 'adidas original';
     const username = "teste@playwright.com";
     const password = "Playwright@123";
