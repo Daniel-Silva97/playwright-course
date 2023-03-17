@@ -1,5 +1,6 @@
 const {test, expect} = require('@playwright/test');
 const { POManager } = require("../pages/POManger");
+const { customTest } = require("../utils/customTest");
 
 // JSON -> String (stringfy) -> JS OBject (parse)
 const dataSet = JSON.parse(JSON.stringify(require("../data/ClientAppPageObjectTestData.json")));
@@ -43,3 +44,18 @@ for(const data of dataSet) {
         expect(orderId.includes(await myOrdersPage.getOrderId())).toBeTruthy();
     });
 }
+
+customTest.only(`Custom Test JS Object`, async ({ page, testDataForOrder })=> {
+    const poManager = new POManager(page);
+
+    // Login
+    const loginPage = poManager.getLoginPage();
+    await loginPage.goTo();
+    await loginPage.validLogin(testDataForOrder.username, testDataForOrder.password);
+
+
+    // Dashboard
+    const dashboardPage = poManager.getDashboardPage();
+    await dashboardPage.searchProductAddCart(testDataForOrder.productName);
+    await dashboardPage.navigateToCart();
+});
