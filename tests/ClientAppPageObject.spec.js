@@ -45,7 +45,7 @@ for(const data of dataSet) {
     });
 }
 
-customTest.only(`Custom Test JS Object`, async ({ page, testDataForOrder })=> {
+customTest(`Custom Test JS Object`, async ({ page, testDataForOrder })=> {
     const poManager = new POManager(page);
 
     // Login
