@@ -1,52 +1,44 @@
 const {test, expect} = require('@playwright/test');
-const { LoginPage } = require('../pages/LoginPage');
-const { DashboardPage } = require('../pages/DashboardPage');
-const { CartPage } = require('../pages/CartPage');
-const { CheckoutPage } = require('../pages/CheckoutPage');
-const { OrderConfirmationPage } = require('../pages/OrderConfirmationPage');
-const { MyOrdersPage } = require('../pages/MyOrdersPage');
+const { POManager } = require("../pages/POManger");
 
+// JSON -> String (stringfy) -> JS OBject (parse)
+const dataSet = JSON.parse(JSON.stringify(require("../data/ClientAppPageObjectTestData.json")));
 
 
 test('Browser Context-Validating Error Login', async ({ page })=> {
-    const productName = 'adidas original';
-    const username = "teste@playwright.com";
-    const password = "Playwright@123";
-    const countryCode = "Ind";
-    const countryName = "India";
-    const thanksText = " Thankyou for the order. ";
+    const poManager = new POManager(page);
 
     // Login
-    const loginPage = new LoginPage(page);
+    const loginPage = poManager.getLoginPage();
     await loginPage.goTo();
-    await loginPage.validLogin(username, password);
+    await loginPage.validLogin(dataSet.username, dataSet.password);
    
 
     // Dashboard
-    const dashboardPage = new DashboardPage(page);
-    await dashboardPage.searchProductAddCart(productName);
+    const dashboardPage = poManager.getDashboardPage();
+    await dashboardPage.searchProductAddCart(dataSet.productName);
     await dashboardPage.navigateToCart();
 
     // Cart
-    const cartPage = new CartPage(page);
-    await cartPage.verifyProductIsDisplayed(productName);
+    const cartPage = poManager.getCartPage();
+    await cartPage.verifyProductIsDisplayed(dataSet.productName);
     await cartPage.checkOut();
 
     // Checkout
-    const checkoutPage = new CheckoutPage(page);
-    await checkoutPage.verifyCountryAndSelect(countryCode, countryName);
-    await checkoutPage.verifyEmail(username);
+    const checkoutPage = poManager.getCheckoutPage();
+    await checkoutPage.verifyCountryAndSelect(dataSet.countryCode, dataSet.countryName);
+    await checkoutPage.verifyEmail(dataSet.username);
     await checkoutPage.submitOrder();
 
     // Order Confirmation
-    const orderConfirmationPage = new OrderConfirmationPage(page);
-    await orderConfirmationPage.checkOrderReview(thanksText);
+    const orderConfirmationPage = poManager.getOrderConfirmatioPage();
+    await orderConfirmationPage.checkOrderReview(dataSet.thanksText);
     const orderId = await orderConfirmationPage.getOrderId();
     console.log(orderId);
     await orderConfirmationPage.goToMyorders();
     
     // My Orders
-    const myOrdersPage = new MyOrdersPage(page);
+    const myOrdersPage = poManager.getMyOrdersPage()
     await myOrdersPage.selectOrder(orderId);
     expect(orderId.includes(await myOrdersPage.getOrderId())).toBeTruthy();
 });
