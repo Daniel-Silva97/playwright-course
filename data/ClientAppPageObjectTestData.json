@@ -1,8 +1,18 @@
-{
-     "productName": "adidas original",
-     "username": "teste@playwright.com",
-     "password": "Playwright@123",
-     "countryCode": "Ind",
-     "countryName": "India",
-     "thanksText": " Thankyou for the order. "
-}
+[
+     {
+          "productName": "adidas original",
+          "username": "teste@playwright.com",
+          "password": "Playwright@123",
+          "countryCode": "Ind",
+          "countryName": "India",
+          "thanksText": " Thankyou for the order. "
+     },
+     {
+          "productName": "zara coat 3",
+          "username": "teste2@playwright.com",
+          "password": "Teste@123",
+          "countryCode": "Cub",
+          "countryName": "Cuba",
+          "thanksText": " Thankyou for the order. "
+     }
+]
