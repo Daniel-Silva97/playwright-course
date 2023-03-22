@@ -9,7 +9,7 @@ class CartPage {
 
     async verifyProductIsDisplayed(productName) {
         await this.orderItens.first().waitFor();
-        const bool = this.productIsVisible();
+        const bool = this.productIsVisible(productName);
         expect(bool).toBeTruthy();
     }
 

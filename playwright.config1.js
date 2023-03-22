@@ -49,7 +49,13 @@ module.exports = defineConfig({
   projects: [
     {
       name: 'chromium', // <PROJECT_NAME>
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        viewport: { width: 720, height: 720}, // Size Browser Window 
+        ignoreHTTPSErrors: true, // Will Handle With SSL errors
+        permissions: [ 'geolocation' ], // Handle with popups request your permission to get your location
+        video: 'retain-on-failure' // record and delete success test, only failure test will be save in your computer
+      },
     },
   /*
     {
@@ -69,7 +75,7 @@ module.exports = defineConfig({
     // },
     // {
     //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
+    //   use: { ...devices['iPhone 12'] }, // Open it in iphone 12 screen
     // },
 
     /* Test against branded browsers. */
