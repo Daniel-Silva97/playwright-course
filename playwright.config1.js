@@ -122,6 +122,21 @@ Test cases run in sequence
 to Disable or fix number of parallel browsers that playwright can open, set:
 
 workers: <NUMBER_PARALLEL_BROWSERS> (Default 5)
+
+
+
+Allure Report
+
+Execute Tests expecting allure report
+npx playwright test --reporter=line,allure-playwright
+
+Generate Report
+allure generates ./allure-results --clean
+
+that will generate report and clean old tests
+
+View Report
+allure open ./allure-report
 */
 
 
