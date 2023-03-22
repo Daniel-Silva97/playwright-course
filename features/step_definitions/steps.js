@@ -1,20 +1,10 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
-const { POManager } = require("../../pages/POManger");
-const { chromium } = require('playwright');
 const { expect } = require('@playwright/test');
 
 
 Given('a login to Ecommerce application with {string} and {string}', {timeout: 100*1000}, async function (username, password) {
     // Generate browser
-    const browser = await chromium.launch({
-        headless: false
-    });
-    // Generate browser context
-    const context = await browser.newContext();
-    // Generate Page
-    const page = await context.newPage();
-    // Using page
-    this.poManager = new POManager(page); // Global declaration
+
     const loginPage = this.poManager.getLoginPage();
 
     await loginPage.goTo();
