@@ -1,5 +1,7 @@
 const {test, expect} = require('@playwright/test')
 
+// I'm change the test case to run parallel, not in sequence
+test.describe.configure({mode: "parallel"})
 test("Popup validations", async({page}) => {
     // Open a page
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");

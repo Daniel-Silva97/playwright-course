@@ -136,7 +136,7 @@ test('Storage State Validation', async ()=> {
 });
 
 
-test('Test titles 2', async ()=> {
+test('@API Test titles 2', async ()=> {
     // Using WebContext with the Storage State
     const page = await webContext.newPage();
     await page.goto("https://rahulshettyacademy.com/client");

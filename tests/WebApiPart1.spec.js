@@ -24,7 +24,7 @@ test.beforeAll( async() => {
 
 
 
-test('Place the order', async ({ page })=> {
+test('@API Place the order', async ({ page })=> {
     // Add to Aplication -> Local Storage the token extract from API request
     // JavaScript initial script
     page.addInitScript( value => {

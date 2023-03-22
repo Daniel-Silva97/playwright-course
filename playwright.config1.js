@@ -12,6 +12,7 @@ const { defineConfig, devices } = require('@playwright/test');
  */
 module.exports = defineConfig({
   testDir: './tests',
+  retries: 1, // If the test fail, playwright will do one more try before report
   /* Maximum time one test can run for. */
   timeout: 60 * 1000,
   expect: {
@@ -26,7 +27,7 @@ module.exports = defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  // retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -108,6 +109,19 @@ npx playwright test <TEST_FILE> --config <CONFIG_FILE>
 
 Set especific browser 
 npx playwright test <TEST_FILE> --config <CONFIG_FILE> --project=<PROJECT_NAME>
+
+
+
+Parallel workers
+
+In playwright:
+
+Test files run in parallel
+Test cases run in sequence
+
+to Disable or fix number of parallel browsers that playwright can open, set:
+
+workers: <NUMBER_PARALLEL_BROWSERS> (Default 5)
 */
 
 
