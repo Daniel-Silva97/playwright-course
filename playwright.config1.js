@@ -137,6 +137,11 @@ that will generate report and clean old tests
 
 View Report
 allure open ./allure-report
+
+In package.json, scripts:
+
+To execute:
+npm run <SCRIPT_NAME>
 */
 
 
