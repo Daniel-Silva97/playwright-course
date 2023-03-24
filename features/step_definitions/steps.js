@@ -40,3 +40,23 @@ Then('Verify order is present in the OrderHistory', async function () {
     await myOrdersPage.selectOrder(this.orderId);
     expect(this.orderId.includes(await myOrdersPage.getOrderId())).toBeTruthy();
 });
+
+
+
+Given('a login to Ecommerce2 application with {string} and {string}', async function (username, password) {
+    const userName = this.page.locator("#username");
+    const signIn = this.page.locator("#signInBtn");
+
+    await this.page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    await userName.type(username);
+    // Typing password
+    await this.page.locator("[type='password']").type(password);
+    // Click login btn
+    await signIn.click();
+  });
+
+  Then('Verify Error message is displayed', async function () {
+    console.log(await this.page.locator("[style*='block']").textContent());
+    // Expect that locator has the string 'Incorrect'
+    await expect(this.page.locator("[style*='block']")).toContainText('Incorrect');
+  });
